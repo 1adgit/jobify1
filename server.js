@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 
 //routers
 import jobRouter from "./routes/jobRouter.js";
+import mongoose from "mongoose";
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
@@ -61,11 +62,10 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 5100;
 try {
   await mongoose.connect(process.env.MONGO_URL);
-
   app.listen(port, () => {
     console.log(`server running on ${port}`);
   });
 } catch (error) {
-  console.log(error);
+  console.log();
   process.exit(1);
 }
