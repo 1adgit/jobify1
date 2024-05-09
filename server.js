@@ -5,6 +5,7 @@ const app = express();
 import morgan from "morgan";
 //routers
 import jobRouter from "./routes/jobRouter.js";
+import mongoose from "mongoose";
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
@@ -56,6 +57,15 @@ app.use((err, req, res, next) => {
   res.status(500).json({ msg: "something went wrong" });
 });
 const port = process.env.PORT || 5100;
-app.listen(port, () => {
-  console.log(`server running on ${port}`);
-});
+try{
+  await mongoose.connect(process.env.MONGO_URL)
+  app.listen(port, () => {
+    console.log(`server running on ${port}`);
+  });
+} catch(error){
+
+  console.log();
+  process.exit(1);
+
+}
+
