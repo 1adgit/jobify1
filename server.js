@@ -7,7 +7,6 @@ import mongoose from "mongoose";
 
 //routers
 import jobRouter from "./routes/jobRouter.js";
-import mongoose from "mongoose";
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
