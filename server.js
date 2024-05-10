@@ -5,6 +5,7 @@ import express, { response } from "express";
 const app = express();
 import morgan from "morgan";
 import mongoose from "mongoose";
+import { validateTest } from './middleware/validationMiddleware.js';
 
 
 //routers
@@ -16,26 +17,16 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-try {
-  const getData = async () => {
-    const response = await fetch(
-      "https://www.course-api.com/react-useReducer-cart-project"
-    );
-    const cartData = await response.json();
-    console.log(cartData);
-  };
 
-  getData();
-} catch (error) {
-  console.log(error);
-}
 app.use(express.json());
 app.get("/", (req, res) => {
   res.send("hello world");
 });
-app.post("/", (req, res) => {
-  console.log(req);
-  res.json({ message: "data received", data: req.body });
+app.post("/api/v1/test",
+  validateTest,
+  (req, res) => {
+  const {name} = req.body;
+  res.json({ message: `hello ${name}` });
 });
 // //get all jobs
 // app.get("/api/v1/jobs", (req, res) => {
