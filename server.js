@@ -5,7 +5,7 @@ import express, { response } from "express";
 const app = express();
 import morgan from "morgan";
 import mongoose from "mongoose";
-import { validateTest } from './middleware/validationMiddleware.js';
+
 
 
 //routers
@@ -22,12 +22,7 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("hello world");
 });
-app.post("/api/v1/test",
-  validateTest,
-  (req, res) => {
-  const {name} = req.body;
-  res.json({ message: `hello ${name}` });
-});
+
 // //get all jobs
 // app.get("/api/v1/jobs", (req, res) => {
 //   res.status(200).json({ jobs });
