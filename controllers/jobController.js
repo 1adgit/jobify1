@@ -1,5 +1,5 @@
 import "express-async-errors";
-import Job from "../models/jobModel.js";
+import Job from "../models/jobModels.js";
 import { StatusCodes } from "http-status-codes";
 
 
