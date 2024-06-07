@@ -1,25 +1,27 @@
 import mongoose from "mongoose";
+import { useRouteError } from "react-router-dom";
 
-const userSchema = new mongoose.Schema({
-
-    name:String,
-    email:String,
-    password:String,
-    lastName:{
-        type: String,
-        default: 'lastName',
-    },
-    location:{
-        type: String,
-        default: 'my city',
-    },
-    role:{
-        type: String,
-        enum: ['user','admin'],
-        default: 'user',
-
-    },
+const UserSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String,
+  lastName: {
+    type: String,
+    default: "lastName",
+  },
+  location: {
+    type: String,
+    default: "my city",
+  },
+  role: {
+    type: String,
+    enum: ["user", "admin"],
+    default: "user",
+  },
 });
-
-
-export default userSchema;
+UserSchema.methods.toJSON = function () {
+  let obj = this.toObject();
+  delete obj.password;
+  return obj;
+};
+export default mongoose.model("User", UserSchema);

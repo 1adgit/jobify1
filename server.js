@@ -1,47 +1,37 @@
-import 'express-async-errors';
+import "express-async-errors";
+import cookieParser from "cookie-parser";
 import * as dotenv from "dotenv";
 dotenv.config();
 import express, { response } from "express";
 const app = express();
 import morgan from "morgan";
 import mongoose from "mongoose";
-
-
+import { authenticateUser } from "./middleware/authMiddleware.js";
 
 //routers
 import jobRouter from "./routes/jobRouter.js";
 import authRouter from "./routes/authRouter.js";
+import userRouter from "./routes/userRouter.js";
 
 //middleware
-import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
+import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
-
-
+app.use(cookieParser());
 app.use(express.json());
 app.get("/", (req, res) => {
   res.send("hello world");
 });
 
-// //get all jobs
-// app.get("/api/v1/jobs", (req, res) => {
-//   res.status(200).json({ jobs });
-// });
+app.get("/api/v1/test", (req, res) => {
+  res.json({ msg: "test route" });
+});
 
-// //create a job
-// app.post("/api/v1/jobs");
-
-// //get single job
-// app.get("/api/v1/jobs/:id");
-
-// //edit a job
-// app.patch("/api/v1/jobs/:id");
-
-// //delete a job
-// app.delete("/api/v1/jobs/:id");
-app.use("/api/v1/jobs", jobRouter);
+app.use("/api/v1/jobs", authenticateUser, jobRouter);
+app.use("/api/v1/users", authenticateUser, userRouter);
 app.use("/api/v1/auth", authRouter);
+
 app.use("*", (req, res) => {
   res.status(404).json({ msg: "not found" });
 });
