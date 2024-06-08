@@ -17,7 +17,9 @@ import {
   Admin,
 } from "./pages";
 import { Children } from "react";
-
+import {action as RegisterAction} from "./pages/Register";
+import {action as LoginAction} from "./pages/Login";
+import {loader as DashboardLoader} from "./pages/DashboardLayout";
 
 export const checkDeafultTheme = () => {
   const isDarkTheme = localStorage.getItem("dark-theme")=== "true";
@@ -39,7 +41,8 @@ const router = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: <DashboardLayout  />,
+        element: <DashboardLayout isDarkThemeEnabled = {isDarkThemeEnabled} />,
+        loader: DashboardLoader,
         children: [
           {
             index: true,
@@ -70,10 +73,12 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+        action : LoginAction,
       },
       {
         path: "register",
         element: <Register />,
+        action : RegisterAction,
       },
     ],
   },

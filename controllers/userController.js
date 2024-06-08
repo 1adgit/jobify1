@@ -6,7 +6,7 @@ import Job from "../models/jobModels.js";
 export const getCurrentUser = async (req, res) => {
   const user = await User.findOne({ _id: req.user.userId });
   const userWithoutPassword = user.toJSON();
-  res.status(StatusCodes.OK).json({ userWithoutPassword });
+  res.status(StatusCodes.OK).json({ user: userWithoutPassword });
 };
 
 export const getApplicationStatus = async (req, res) => {
