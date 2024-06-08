@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable no-unused-vars */
 import {
   BrowserRouter,
   RouterProvider,
@@ -15,15 +17,20 @@ import {
   AllJobs,
   Profile,
   Admin,
+  EditJob,
 } from "./pages";
 import { Children } from "react";
-import {action as RegisterAction} from "./pages/Register";
-import {action as LoginAction} from "./pages/Login";
-import {loader as DashboardLoader} from "./pages/DashboardLayout";
-
+import { action as RegisterAction } from "./pages/Register";
+import { action as LoginAction } from "./pages/Login";
+import { loader as DashboardLoader } from "./pages/DashboardLayout";
+import { action as addJobAction } from "./pages/AddJob";
+import { loader as allJobsLoader } from "./pages/AllJobs";
+import { loader as editJobLoader } from "./pages/EditJob";
+import { action as editJobAction } from "./pages/EditJob";
+import { action as deleteJobAction } from "./pages/DeleteJob";
 export const checkDeafultTheme = () => {
-  const isDarkTheme = localStorage.getItem("dark-theme")=== "true";
-  document.body.classList.toggle('dark-theme', isDarkTheme);
+  const isDarkTheme = localStorage.getItem("dark-theme") === "true";
+  document.body.classList.toggle("dark-theme", isDarkTheme);
   return isDarkTheme;
 };
 
@@ -40,13 +47,24 @@ const router = createBrowserRouter([
         element: <Landing />,
       },
       {
+        path: "login",
+        element: <Login />,
+        action: LoginAction,
+      },
+      {
+        path: "register",
+        element: <Register />,
+        action: RegisterAction,
+      },
+      {
         path: "dashboard",
-        element: <DashboardLayout isDarkThemeEnabled = {isDarkThemeEnabled} />,
+        element: <DashboardLayout isDarkThemeEnabled={isDarkThemeEnabled} />,
         loader: DashboardLoader,
         children: [
           {
             index: true,
             element: <AddJob />,
+            action: addJobAction,
           },
           {
             path: "stats",
@@ -56,6 +74,7 @@ const router = createBrowserRouter([
           {
             path: "all-jobs",
             element: <AllJobs />,
+            loader: allJobsLoader,
           },
 
           {
@@ -67,18 +86,17 @@ const router = createBrowserRouter([
             path: "admin",
             element: <Admin />,
           },
+          {
+            path: "edit-job/:id",
+            element: <EditJob />,
+            loader: editJobLoader,
+            action: editJobAction,
+          },
+          {
+            path: "delete-job/:id",
+            action: deleteJobAction,
+          },
         ],
-      },
-
-      {
-        path: "login",
-        element: <Login />,
-        action : LoginAction,
-      },
-      {
-        path: "register",
-        element: <Register />,
-        action : RegisterAction,
       },
     ],
   },
