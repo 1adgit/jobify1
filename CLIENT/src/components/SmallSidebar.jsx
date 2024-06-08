@@ -10,7 +10,7 @@ const SmallSidebar = () => {
   //   const data = useDashboardContext();
   //   console.log(data);
   const { showSidebar, toggleSidebar } = useDashboardContext();
-  console.log(showSidebar);
+  // console.log(showSidebar);
   return (
     <Wrapper>
       <div
