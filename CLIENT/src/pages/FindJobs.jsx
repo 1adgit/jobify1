@@ -5,7 +5,7 @@ import axios from 'axios';
 const searchForJobs = (place) => {
 
 const apiUrl = 'https://api.scrapingdog.com/indeed';
-const apiKey = '666dd3d958767a1b1804c6dc';
+const apiKey = '666fe381e2e88d70f5168059';
 const jobSearchUrl = `https://in.indeed.com/jobs?q=python&l=${place}`;
 
 // Set up the parameters
