@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Wrapper from "../assets/wrappers/SmallSidebar";
 import React from "react";
 import { useDashboardContext } from "../pages/DashboardLayout";
@@ -25,7 +26,7 @@ const SmallSidebar = () => {
           <header>
             <Logo />
           </header>
-          <NavLinks/>
+          <NavLinks />
         </div>
       </div>
     </Wrapper>

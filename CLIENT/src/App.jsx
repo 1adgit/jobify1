@@ -18,6 +18,7 @@ import {
   Profile,
   Admin,
   EditJob,
+  FindJobs,
 } from "./pages";
 import { Children } from "react";
 import { action as RegisterAction } from "./pages/Register";
@@ -74,7 +75,10 @@ const router = createBrowserRouter([
             element: <Stats />,
             loader: statsLoader,
           },
-
+          {
+            path: "find-jobs",
+            element: <FindJobs />,
+          },
           {
             path: "all-jobs",
             element: <AllJobs />,
