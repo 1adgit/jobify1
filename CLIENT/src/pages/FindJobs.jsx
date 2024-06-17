@@ -1,52 +1,114 @@
-import Wrapper from "../assets/wrappers/DashboardFormPage";
-import { Form } from "react-router-dom";
-import axios from 'axios';
-import React, { useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState } from "react";
+import axios from "axios";
+import "./JobListings.css";
 
 const FindJobs = () => {
   const [jobs, setJobs] = useState([]);
+  const [place, setPlace] = useState("");
+  const [jobType, setJobType] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [jobsPerPage] = useState(10); // Number of jobs per page
 
-  const searchForJobs = (place) => {
-    const apiUrl = 'https://api.scrapingdog.com/indeed';
-    const apiKey = '666fe381e2e88d70f5168059';
-    const jobSearchUrl = `https://in.indeed.com/jobs?q=python&l=${place}`;
-    
-    // Set up the parameters
+  const searchForJobs = () => {
+    setLoading(true);
+    const apiUrl = "https://api.scrapingdog.com/indeed";
+    const apiKey = "666fe381e2e88d70f5168059";
+    const jobSearchUrl = `https://in.indeed.com/jobs?q=${jobType}&l=${place}`;
+
     const params = { api_key: apiKey, url: jobSearchUrl };
-    
-    // Make the HTTP GET request
-    axios.get(apiUrl, { params })
-      .then(response => {
-        // Check if the request was successful (status code 200)
+
+    axios
+      .get(apiUrl, { params })
+      .then((response) => {
         if (response.status === 200) {
-          // Parse the JSON content
           setJobs(response.data);
-          console.log('JSON Response:');
-          console.log(response.data);
         } else {
           console.error(`Error: ${response.status}`);
           console.error(response.data);
         }
+        setLoading(false);
       })
-      .catch(error => {
-        console.error('Error making the request:', error.message);
+      .catch((error) => {
+        console.error("Error making the request:", error.message);
+        setLoading(false);
       });
-  }
+  };
+
+  // Logic for pagination
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div>
-      <button 
-        type="submit" 
-        className="btn btn-block form-btn" 
-        onClick={() => searchForJobs('Noida')}
+    <div className="container">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          searchForJobs();
+        }}
       >
-        Submit
-      </button>
-      <ul>
-        {jobs.map((job, index) => (
-          <li key={index}>{job.jobTitle} - {job.companyName}</li> 
-        ))}
-      </ul>
+        <div>
+          <label htmlFor="jobType">Job Type:</label>
+          <input
+            type="text"
+            id="jobType"
+            name="jobType"
+            value={jobType}
+            onChange={(e) => setJobType(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="place">Location:</label>
+          <input
+            type="text"
+            id="place"
+            name="place"
+            value={place}
+            onChange={(e) => setPlace(e.target.value)}
+          />
+        </div>
+        <button type="submit" className="btn btn-block form-btn">
+          Search
+        </button>
+      </form>
+      {loading ? (
+        <div className="loader"></div>
+      ) : (
+        <div>
+          <ul className="job-list">
+            {currentJobs.map((job, index) => (
+              <li key={index} className="job">
+                <h2>{job.jobTitle}</h2>
+                <p>{job.companyName}</p>
+                <a href={job.jobLink} target="_blank" rel="noopener noreferrer">
+                  Apply Job
+                </a>
+              </li>
+            ))}
+          </ul>
+          {/* Pagination */}
+          <ul className="pagination">
+            {jobs.length > 0 &&
+              Array.from({ length: Math.ceil(jobs.length / jobsPerPage) }).map(
+                (item, index) => (
+                  <li
+                    key={index}
+                    className={`page-item ${
+                      index + 1 === currentPage ? "active" : ""
+                    }`}
+                    onClick={() => paginate(index + 1)}
+                  >
+                    {index + 1}
+                  </li>
+                )
+              )}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
