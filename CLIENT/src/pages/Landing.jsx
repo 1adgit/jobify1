@@ -18,7 +18,7 @@ const Landing = () => {
           job <span>tracking</span> app
         </h1>
         <p>
-        Welcome to our Job Tracking App! This platform is designed to help you manage and track your job applications all in one place. It's the perfect tool for job seekers looking to stay organized and efficient in their job search. Start your journey with us today!
+        Welcome to our Job Tracking App! This platform is designed to help you manage and track your job applications and search for new job openings all in one place. It's the perfect tool for job seekers looking to stay organized and efficient in their job search. Start your journey with us today!
         </p>
         <Link to="/register" className="btn register-link">
           Register
