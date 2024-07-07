@@ -35,5 +35,5 @@ Jobify is a MERN stack application that allows users to keep track of their job 
 
 ## Usage
 
-1. Run "npm run dev" ont the terminal
+1. Run "npm run dev" on the terminal
 2. Open your browser and navigate to `http://localhost:5173`.
