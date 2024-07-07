@@ -1,6 +1,6 @@
 ## Introduction
 
-The Job Application Tracker is a MERN stack application that allows users to keep track of their job applications, deadlines, and progress. Users can also search for new job openings.
+Jobify is a MERN stack application that allows users to keep track of their job applications, deadlines, and progress. Users can also search for new job openings.
 
 ## Features
 
