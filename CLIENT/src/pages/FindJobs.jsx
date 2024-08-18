@@ -15,7 +15,7 @@ const FindJobs = () => {
   const searchForJobs = () => {
     setLoading(true);
     const apiUrl = "https://api.scrapingdog.com/indeed";
-    const apiKey = "666fe381e2e88d70f5168059";
+    const apiKey = "669b9b7b677c5b61ffca8bcd";
     const jobSearchUrl = `https://in.indeed.com/jobs?q=${jobType}&l=${place}`;
 
     const params = { api_key: apiKey, url: jobSearchUrl };
@@ -45,7 +45,6 @@ const FindJobs = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    
     <div className="container">
       <form
         onSubmit={(e) => {
@@ -53,36 +52,45 @@ const FindJobs = () => {
           searchForJobs();
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-      <div>
-        <label htmlFor="jobType" style={{ marginRight: '10px' }} >Job Type:</label>
-        <input
-          type="text"
-          id="jobType"
-          name="jobType"
-          value={jobType}
-          style={{ marginTop: '10px' }}
-          onChange={(e) => setJobType(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="place" >Location:</label>
-        <input
-          type="text"
-          id="place"
-          name="place"
-          value={place}
-          style={{ marginTop: '10px' }}
-          onChange={(e) => setPlace(e.target.value)}
-        />
-      </div>
-      <button 
-      type="submit" 
-      className="btn btn-block"
-      style={{  width: '200px' ,  height: '37px' , marginTop: '20px' }}>
-        Search
-      </button>
-    </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <div>
+            <label htmlFor="jobType" style={{ marginRight: "10px" }}>
+              Job Type:
+            </label>
+            <input
+              type="text"
+              id="jobType"
+              name="jobType"
+              value={jobType}
+              style={{ marginTop: "10px" }}
+              onChange={(e) => setJobType(e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="place">Location:</label>
+            <input
+              type="text"
+              id="place"
+              name="place"
+              value={place}
+              style={{ marginTop: "10px" }}
+              onChange={(e) => setPlace(e.target.value)}
+            />
+          </div>
+          <button
+            type="submit"
+            className="btn btn-block"
+            style={{ width: "200px", height: "37px", marginTop: "20px" }}
+          >
+            Search
+          </button>
+        </div>
       </form>
       {loading ? (
         <div className="loader"></div>
@@ -91,14 +99,15 @@ const FindJobs = () => {
           <ul className="job-list">
             {currentJobs.map((job, index) => (
               <li key={index} className="job">
-              
                 <h2>{job.jobTitle}</h2>
                 <p>{job.companyName}</p>
-                <a href={job.jobLink} 
-                       target="_blank" 
-                       rel="noopener noreferrer" 
-                       className="btn delete-btn"
-                       style={{  color: 'white' }}>
+                <a
+                  href={job.jobLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn delete-btn"
+                  style={{ color: "white" }}
+                >
                   Apply Job
                 </a>
               </li>
